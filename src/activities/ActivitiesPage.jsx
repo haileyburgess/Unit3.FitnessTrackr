@@ -28,6 +28,23 @@ export default function ActivitiesPage() {
     },
   });
 
+  //deleting
+  const {
+    mutate: deletedActivity,
+    deleting,
+    deleteError,
+  } = useMutation("DELETE", "/activities/", ["activities"], {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  // Function to handle deleting an activity
+const handleDelete = (id) => {
+  deletedActivity(null, `/activities/${id}`); // Dynamically add the id to the URL
+};
+
   //call mutate function w/ data from the form (below)
   const addActivity = (formData) => {
     const name = formData.get("name");
@@ -43,9 +60,13 @@ export default function ActivitiesPage() {
       {activities?.length > 0 ? (
         activities.map((activity) => (
           <p key={activity.id}>
-            {activity.name}
-            {token ? <button>Delete</button> : null}
-          </p>
+          {activity.name}
+          {token ? (
+            <button onClick={() => deletedActivity(activity.id)} disabled={deleting}>
+              {deleting ? "Deleting..." : "Delete"}
+            </button>
+          ) : null}
+        </p>
         ))
       ) : (
         <p>No activities found.</p>
@@ -53,10 +74,10 @@ export default function ActivitiesPage() {
       <form action={addActivity}>
         <label>
           Name: <input type="text" name="name" />
-          Description: <input type = "text" name="description" />
+          Description: <input type="text" name="description" />
         </label>
         <br />
-        <button>Submit</button>
+        <button type="Submit">Submit</button>
       </form>
     </>
   );
