@@ -19,7 +19,9 @@ export default function useMutation(method, resource, tagsToInvalidate) {
       const result = await request(resource, {
         method,
         body: JSON.stringify(body),
-      });
+        headers: {"Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      }});
       setData(result);
       invalidateTags(tagsToInvalidate);
     } catch (e) {
