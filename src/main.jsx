@@ -7,6 +7,7 @@ import Layout from "./layout/Layout";
 import { AuthProvider } from "./auth/AuthContext";
 import { ApiProvider } from "./api/ApiContext";
 import { PageProvider } from "./layout/PageContext";
+import ActivitiesPage from "./activities/ActivitiesPage";
 
 createRoot(document.getElementById("root")).render(
   <AuthProvider>
