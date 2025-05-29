@@ -21,7 +21,12 @@ export default function ActivitiesPage() {
     data: addedActivity,
     loading: adding,
     error: addError,
-  } = useMutation("POST", "/activities", ["activities"]);
+  } = useMutation("POST", "/activities", ["activities"], {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   //call mutate function w/ data from the form (below)
   const addActivity = (formData) => {
@@ -47,8 +52,8 @@ export default function ActivitiesPage() {
       )}
       <form action={addActivity}>
         <label>
-          Name: <input name="name" />
-          Description: <input description="description" />
+          Name: <input type="text" name="name" />
+          Description: <input type = "text" name="description" />
         </label>
         <br />
         <button>Submit</button>
